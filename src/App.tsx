@@ -9,6 +9,7 @@ function App() {
   const [error, setError] = useState<string | null>(null)
   const [selectedCategory, setSelectedCategory] = useState<string>('Todas')
   const [categories, setCategories] = useState<string[]>([])
+  const [showAllProducts, setShowAllProducts] = useState(false)
 
   useEffect(() => {
     const fetchAnchetas = async () => {
@@ -44,6 +45,13 @@ function App() {
   const filteredAnchetas = selectedCategory === 'Todas' 
     ? anchetas 
     : anchetas.filter(ancheta => ancheta.Categoria === selectedCategory)
+
+  // Limitar a 6 productos si no se ha presionado "Ver todos"
+  const displayedAnchetas = showAllProducts 
+    ? filteredAnchetas 
+    : filteredAnchetas.slice(0, 6)
+
+  const hasMoreProducts = filteredAnchetas.length > 6
 
   if (loading) {
     return (
@@ -124,23 +132,28 @@ function App() {
 
       {/* Contenido principal */}
       <main className="max-w-7xl mx-auto px-4 py-8 sm:py-12">
-        {/* Filtros de categoría */}
+        {/* Filtros de categoría con scroll horizontal */}
         {categories.length > 1 && (
           <div className="mb-8">
-            <div className="flex flex-wrap gap-3 justify-center">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`px-4 sm:px-6 py-2.5 rounded-full font-medium text-sm sm:text-base transition-all duration-300 transform hover:scale-105 ${
-                    selectedCategory === category
-                      ? 'bg-gradient-to-r from-rose-400 to-pink-400 text-white shadow-md'
-                      : 'bg-white/80 text-gray-600 hover:bg-white hover:text-rose-400 border border-rose-100'
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
+            <div className="overflow-x-auto pb-2 -mx-4 px-4">
+              <div className="flex gap-3 justify-start sm:justify-center min-w-max sm:min-w-0">
+                {categories.map((category) => (
+                  <button
+                    key={category}
+                    onClick={() => {
+                      setSelectedCategory(category)
+                      setShowAllProducts(false) // Resetear al cambiar categoría
+                    }}
+                    className={`px-4 sm:px-6 py-2.5 rounded-full font-medium text-sm sm:text-base transition-all duration-300 transform hover:scale-105 flex-shrink-0 ${
+                      selectedCategory === category
+                        ? 'bg-gradient-to-r from-rose-400 to-pink-400 text-white shadow-md'
+                        : 'bg-white/80 text-gray-600 hover:bg-white hover:text-rose-400 border border-rose-100'
+                    }`}
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         )}
@@ -156,11 +169,49 @@ function App() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-            {filteredAnchetas.map((ancheta) => (
-              <AnchetaCard key={ancheta["Columna 1"]} ancheta={ancheta} />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+              {displayedAnchetas.map((ancheta) => (
+                <AnchetaCard key={ancheta["Columna 1"]} ancheta={ancheta} />
+              ))}
+            </div>
+
+            {/* Botón "Ver todos los productos" */}
+            {hasMoreProducts && !showAllProducts && (
+              <div className="mt-12 text-center">
+                <button
+                  onClick={() => setShowAllProducts(true)}
+                  className="inline-flex items-center gap-2 bg-gradient-to-r from-rose-400 to-pink-400 hover:from-rose-500 hover:to-pink-500 text-white font-bold py-4 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg text-base sm:text-lg"
+                >
+                  <span>Ver todos los productos</span>
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                  <span className="bg-white/20 backdrop-blur-sm px-2.5 py-0.5 rounded-full text-sm font-bold">
+                    {filteredAnchetas.length}
+                  </span>
+                </button>
+              </div>
+            )}
+
+            {/* Botón "Ver menos" cuando se muestran todos */}
+            {showAllProducts && hasMoreProducts && (
+              <div className="mt-12 text-center">
+                <button
+                  onClick={() => {
+                    setShowAllProducts(false)
+                    window.scrollTo({ top: 0, behavior: 'smooth' })
+                  }}
+                  className="inline-flex items-center gap-2 bg-white/80 hover:bg-white text-gray-700 hover:text-rose-500 font-bold py-3.5 px-7 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-md border-2 border-rose-200 text-base"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
+                  </svg>
+                  <span>Ver menos</span>
+                </button>
+              </div>
+            )}
+          </>
         )}
       </main>
 
