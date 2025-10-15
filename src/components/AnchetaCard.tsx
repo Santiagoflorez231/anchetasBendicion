@@ -205,7 +205,6 @@ export default function AnchetaCard({ ancheta }: AnchetaCardProps) {
       </div>
     </div>
 
-      {/* Modal con diseño adaptativo */}
       {isModalOpen && (
         <div 
           className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm animate-fadeIn flex items-center justify-center p-4"
@@ -215,7 +214,6 @@ export default function AnchetaCard({ ancheta }: AnchetaCardProps) {
             className="bg-white rounded-3xl max-w-5xl w-full max-h-[90vh] flex flex-col lg:flex-row overflow-hidden shadow-2xl animate-slideUp"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Sección de Imagen - Izquierda en desktop, Arriba en móvil */}
             <div className="relative flex-shrink-0 h-[45vh] lg:h-auto lg:w-1/2 bg-gradient-to-br from-amber-50 via-rose-50 to-pink-50 overflow-hidden">
               {currentImageUrl && !imageError ? (
                 <img
