@@ -25,7 +25,6 @@ function App() {
         const data = await response.json()
         setAnchetas(data)
         
-        // Extraer categorías únicas
         const uniqueCategories = Array.from(
           new Set(data.map((ancheta: Ancheta) => ancheta.Categoria).filter(Boolean))
         ) as string[]
@@ -41,12 +40,10 @@ function App() {
     fetchAnchetas()
   }, [])
 
-  // Filtrar anchetas por categoría
   const filteredAnchetas = selectedCategory === 'Todas' 
     ? anchetas 
     : anchetas.filter(ancheta => ancheta.Categoria === selectedCategory)
 
-  // Limitar a 6 productos si no se ha presionado "Ver todos"
   const displayedAnchetas = showAllProducts 
     ? filteredAnchetas 
     : filteredAnchetas.slice(0, 6)
@@ -78,7 +75,6 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-rose-50 to-pink-50">
-      {/* Header con efecto derretimiento */}
       <div className="sticky top-0 z-10">
         <header className="relative bg-white shadow-sm">
           <div className="relative z-10 max-w-7xl mx-auto px-4 py-4 sm:py-5">
@@ -92,7 +88,6 @@ function App() {
             </div>
           </div>
           
-          {/* Borde inferior con efecto derretimiento - ONDAS SUPER PRONUNCIADAS */}
           <div className="absolute bottom-0 left-0 right-0 h-10 overflow-visible -mb-1 z-0">
             <svg
               className="absolute bottom-0 w-full h-12"
@@ -114,13 +109,11 @@ function App() {
                 className="fill-rose-200/70"
               />
               
-              {/* Segunda capa - ROSA MEDIO - ondas medianas */}
               <path
                 d="M0,30 Q100,12 200,30 T400,30 Q500,48 600,30 T800,30 Q900,15 1000,30 T1200,30 L1200,60 L0,60 Z"
                 className="fill-pink-200/60"
               />
               
-              {/* Tercera capa - ROSA CLARO - ondas pequeñas para profundidad */}
               <path
                 d="M0,38 Q60,28 120,38 T240,38 Q300,50 360,38 T480,38 Q540,32 600,38 T720,38 Q780,52 840,38 T960,38 Q1020,35 1080,38 T1200,38 L1200,60 L0,60 Z"
                 className="fill-rose-100/50"
@@ -130,9 +123,7 @@ function App() {
         </header>
       </div>
 
-      {/* Contenido principal */}
       <main className="max-w-7xl mx-auto px-4 py-8 sm:py-12">
-        {/* Filtros de categoría con scroll horizontal */}
         {categories.length > 1 && (
           <div className="mb-8">
             <div className="overflow-x-auto pb-2 -mx-4 px-4">
@@ -142,7 +133,7 @@ function App() {
                     key={category}
                     onClick={() => {
                       setSelectedCategory(category)
-                      setShowAllProducts(false) // Resetear al cambiar categoría
+                      setShowAllProducts(false) 
                     }}
                     className={`px-4 sm:px-6 py-2.5 rounded-full font-medium text-sm sm:text-base transition-all duration-300 transform hover:scale-105 flex-shrink-0 ${
                       selectedCategory === category
@@ -158,7 +149,6 @@ function App() {
           </div>
         )}
 
-        {/* Grid de anchetas */}
         {filteredAnchetas.length === 0 ? (
           <div className="text-center py-20">
             <span className="text-6xl mb-4 block">🎁</span>
@@ -176,7 +166,6 @@ function App() {
               ))}
             </div>
 
-            {/* Botón "Ver todos los productos" */}
             {hasMoreProducts && !showAllProducts && (
               <div className="mt-12 text-center">
                 <button
@@ -194,14 +183,10 @@ function App() {
               </div>
             )}
 
-            {/* Botón "Ver menos" cuando se muestran todos */}
             {showAllProducts && hasMoreProducts && (
               <div className="mt-12 text-center">
                 <button
-                  onClick={() => {
-                    setShowAllProducts(false)
-                    window.scrollTo({ top: 0, behavior: 'smooth' })
-                  }}
+                  onClick={() => setShowAllProducts(false)}
                   className="inline-flex items-center gap-2 bg-white/80 hover:bg-white text-gray-700 hover:text-rose-500 font-bold py-3.5 px-7 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-md border-2 border-rose-200 text-base"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
@@ -215,9 +200,7 @@ function App() {
         )}
       </main>
 
-      {/* Footer mejorado con call-to-action */}
       <footer className="mt-16 sm:mt-20 relative">
-        {/* Ondas superiores del footer - PRONUNCIADAS Y COLORIDAS */}
         <div className="absolute top-0 left-0 right-0 h-16 overflow-visible -mt-16">
           <svg
             className="absolute top-0 w-full h-20"
@@ -227,7 +210,6 @@ function App() {
           >
          
             
-            {/* Segunda capa - ROSA MEDIO - ondas medianas superpuestas */}
             <path
               d="M0,18 Q75,40 150,18 T300,18 Q400,52 500,18 T700,18 Q800,42 900,18 T1100,18 Q1150,35 1200,18 L1200,80 L0,80 Z"
               className="fill-pink-200/70"
@@ -281,12 +263,10 @@ function App() {
               </a>
             </div>
 
-            {/* Separador decorativo */}
             <div className="flex items-center justify-center my-8">
               <div className="h-px bg-gradient-to-r from-transparent via-rose-200 to-transparent w-full max-w-md"></div>
             </div>
 
-            {/* Información adicional */}
             <div className="text-center space-y-2">
               <p className="text-xs sm:text-sm text-gray-500">
                 <span className="font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-pink-400">
