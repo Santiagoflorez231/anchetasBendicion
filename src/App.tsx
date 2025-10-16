@@ -77,14 +77,24 @@ function App() {
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-rose-50 to-pink-50">
       <div className="sticky top-0 z-10">
         <header className="relative bg-white shadow-sm">
-          <div className="relative z-10 max-w-7xl mx-auto px-4 py-4 sm:py-5">
-            <div className="text-center">
-              <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-pink-400 to-rose-400 mb-1 tracking-tight">
-                🎁 Anchetas Bendición
-              </h1>
-              <p className="text-xs sm:text-sm text-gray-500 font-light tracking-wide">
-                Detalles especiales para cada ocasión
-              </p>
+          <div className="relative z-10 max-w-7xl mx-auto px-4 py-3 sm:py-4">
+            <div className="flex items-center justify-center">
+              <img 
+                src="/bendicion_logo.png" 
+                alt="Anchetas Bendición Logo" 
+                className="absolute left-2 sm:left-4 h-14 sm:h-16 md:h-18 w-auto object-contain opacity-90"
+                style={{ zIndex: 0 }}
+              />
+              
+              {/* Textos centrados con z-index superior */}
+              <div className="text-center relative z-10">
+                <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-pink-400 to-rose-400 tracking-tight leading-tight mb-0.5">
+                  Anchetas Bendición
+                </h1>
+                <p className="text-xs sm:text-sm text-gray-500 font-light tracking-wide">
+                  Detalles especiales para cada ocasión
+                </p>
+              </div>
             </div>
           </div>
           
