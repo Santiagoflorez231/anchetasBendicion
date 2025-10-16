@@ -317,7 +317,7 @@ function App() {
         href="https://wa.me/573104418272?text=Hola!%20Quiero%20informaci%C3%B3n%20sobre%20las%20anchetas%20%F0%9F%8E%81"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 group"
+        className="fixed bottom-6 right-6 z-0 group"
         aria-label="Contactar por WhatsApp"
       >
         <div className="relative animate-bounce-slow">
