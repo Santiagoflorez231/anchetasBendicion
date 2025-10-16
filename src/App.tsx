@@ -86,7 +86,6 @@ function App() {
                 style={{ zIndex: 0 }}
               />
               
-              {/* Textos centrados con z-index superior */}
               <div className="text-center relative z-10">
                 <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-pink-400 to-rose-400 tracking-tight leading-tight mb-0.5">
                   Anchetas Bendición
