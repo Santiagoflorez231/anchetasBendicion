@@ -133,26 +133,48 @@ function App() {
       </div>
 
       <main className="max-w-7xl mx-auto px-4 py-8 sm:py-12">
+        {/* Filtros de categoría con contador visual */}
         {categories.length > 1 && (
           <div className="mb-8">
             <div className="overflow-x-auto pb-2 -mx-4 px-4">
               <div className="flex gap-3 justify-start sm:justify-center min-w-max sm:min-w-0">
-                {categories.map((category) => (
-                  <button
-                    key={category}
-                    onClick={() => {
-                      setSelectedCategory(category)
-                      setShowAllProducts(false) 
-                    }}
-                    className={`px-4 sm:px-6 py-2.5 rounded-full font-medium text-sm sm:text-base transition-all duration-300 transform hover:scale-105 flex-shrink-0 ${
-                      selectedCategory === category
-                        ? 'bg-gradient-to-r from-rose-400 to-pink-400 text-white shadow-md'
-                        : 'bg-white/80 text-gray-600 hover:bg-white hover:text-rose-400 border border-rose-100'
-                    }`}
-                  >
-                    {category}
-                  </button>
-                ))}
+                {categories.map((category) => {
+                  const count = category === 'Todas' 
+                    ? anchetas.length 
+                    : anchetas.filter(a => a.Categoria === category).length;
+                  const isActive = selectedCategory === category;
+                  
+                  return (
+                    <button
+                      key={category}
+                      onClick={() => {
+                        setSelectedCategory(category)
+                        setShowAllProducts(false) 
+                      }}
+                      className={`relative px-4 sm:px-6 py-2.5 rounded-full font-medium text-sm sm:text-base transition-all duration-300 transform hover:scale-105 flex-shrink-0 ${
+                        isActive
+                          ? 'bg-gradient-to-r from-rose-400 to-pink-400 text-white shadow-lg shadow-rose-200/50'
+                          : 'bg-white/80 text-gray-600 hover:bg-white hover:text-rose-400 border border-rose-100 hover:border-rose-200 hover:shadow-md'
+                      }`}
+                    >
+                      <span className="flex items-center gap-2">
+                        {category}
+                        
+                        <span className={`inline-flex items-center justify-center min-w-[24px] h-6 px-2 rounded-full text-xs font-bold transition-all duration-300 ${
+                          isActive 
+                            ? 'bg-white/25 text-white' 
+                            : 'bg-rose-100 text-rose-600'
+                        }`}>
+                          {count}
+                        </span>
+                      </span>
+                      
+                      {isActive && (
+                        <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-gradient-to-r from-rose-400 to-pink-400 rounded-full shadow-md animate-pulse"></div>
+                      )}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -291,7 +313,6 @@ function App() {
         </div>
       </footer>
 
-      {/* Botón flotante de WhatsApp */}
       <a
         href="https://wa.me/573104418272?text=Hola!%20Quiero%20informaci%C3%B3n%20sobre%20las%20anchetas%20%F0%9F%8E%81"
         target="_blank"
@@ -299,9 +320,7 @@ function App() {
         className="fixed bottom-6 right-6 z-50 group"
         aria-label="Contactar por WhatsApp"
       >
-        {/* Botón principal con animación de rebote suave */}
         <div className="relative animate-bounce-slow">
-          {/* Botón */}
           <div className="relative bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 text-white rounded-full p-4 shadow-2xl transition-all duration-300 transform group-hover:scale-110 active:scale-95">
             <svg
               className="w-7 h-7 sm:w-8 sm:h-8"
@@ -313,7 +332,6 @@ function App() {
             </svg>
           </div>
 
-          {/* Tooltip "Escríbenos" */}
           <div className="absolute right-full mr-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
             <div className="bg-gray-900 text-white text-sm font-medium px-3 py-2 rounded-lg whitespace-nowrap shadow-lg">
               ¡Escríbenos!
